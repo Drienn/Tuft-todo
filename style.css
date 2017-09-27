@@ -1,0 +1,191 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: arial;
+}
+
+#modal-container {
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+
+#modal-content {
+  z-index: 2;
+  width: 35%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: white;
+  text-align: left;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: 18px;
+}
+
+#modal-content label {
+  padding: 10px;
+  margin: 5px;
+  width: 20%;
+}
+
+#desc-label {
+  position: relative;
+  bottom: 142px;
+}
+
+.form-inputs {
+  font-size: 18px;
+}
+
+.date {
+  width: 10%;
+  line-height: 30px;
+}
+
+#title-text {
+  width: 80%;
+  line-height: 30px;
+}
+
+#description-text {
+  width: 60%;
+}
+
+button {
+  font-size: 18px;
+  float: right;
+  margin-right: 20px;
+  background-color: #128DD5;
+  color: white;
+  border-radius: 10px;
+  width: 185px;
+  height: 37px;
+}
+
+button span {}
+
+#container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(10, 10%);
+}
+
+#menu-toggle {
+  grid-column: 1;
+  grid-row: 1;
+  height: 50px;
+  width: 50px;
+  margin-left: 15%;
+}
+
+.fa-list-ul {
+  border: 2px solid white;
+  padding: 2px;
+}
+
+#nav {
+  height: 100vh;
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  color: white;
+  background-color: #464D77;
+  text-align: center;
+  font-size: 20px;
+  overflow-x: hidden;
+}
+
+@media (max-width: 500px) {
+  z-index: 1;
+  background-color: green;
+}
+
+.nav-title {
+  margin-top: 50px;
+  font-size: 24px;
+  display: inline-block;
+}
+
+.complete {
+  text-decoration: line-through;
+}
+
+#total-badge {
+  margin-top: 50px;
+}
+
+.nav-badge {
+  float: right;
+  margin-right: 10px;
+  background-color: #6B7192;
+  border-radius: 50%;
+  min-line-height: 25px;
+  line-height: auto;
+  min-width: 25px;
+  width: auto;
+  margin-right: 5px;
+}
+
+.nav-date {
+  height: 5%;
+  margin: 0px auto;
+  color: #ABAEBD
+}
+
+.nav-date:hover {
+  background-color: #383E5F;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-date:hover>.nav-badge {
+  background-color: #128DD5;
+}
+
+li {
+  width: 100%;
+  list-style: none;
+}
+
+#main-container {
+  grid-column: 1 / span all;
+  grid-row: 2/ span all;
+}
+
+#todo-title {
+  margin-left: 45.5px;
+}
+
+#add-todo {
+  color: #2394D8
+}
+
+#add-todo:hover {
+  cursor: pointer;
+}
+
+.todo-line {
+  width: 99%;
+  border-top: 1px solid lightgrey;
+  padding: 10px;
+}
+
+.todo-item:hover {
+  color: #4FA0D5;
+  cursor: pointer;
+}
+
+.fa-trash-o {
+  position: absolute;
+  right: 10px;
+}
+
+.fa-trash-o:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuft-Todo & Needle-ss-To Say</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+
+<body>
+
+
+
+
+  <div id="container">
+    <!-- Nav Bar -->
+    <div id="nav" style="width: 0px">
+      <p class="nav-title"><i class="fa fa-list-ul" aria-hidden="true"></i> All Todos </p>
+      <span class="nav-badge" id="total-badge">15</span>
+      <div class="nav-date">02/16
+        <span class="nav-badge">8</span>
+      </div>
+      <div class="nav-date">03/16
+        <span class="nav-badge">7</span>
+      </div>
+      <br>
+      <br>
+      <br>
+      <p class="nav-title"><i class="fa fa-check-square-o" aria-hidden="true"></i> Completed </p>
+      <div class="nav-date"><span class="complete">02/15</span>
+      </div>
+
+    </div>
+    <img src="images/menu-icon.svg" alt="menu-toggle" id="menu-toggle">
+
+
+    <div id="main-container">
+      <!-- modal -->
+      <!-- style="display: none" -->
+      <div id="modal-container" style="display: none">
+      </div>
+
+      <div id="modal-content" style="display: none">
+        <table>
+          <thead>
+            <th></th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><label for="title">Title</label>
+                <input id="title-text" class="form-inputs" type="text" name="title" value="" placeholder="Title"></td>
+            </tr>
+            <tr>
+              <td><label for="title">Due Date</label>
+                <input id="due-date-day" class="form-inputs date" type="number" name="due-date-day" value="" placeholder="Day"> /
+                <input id="due-date-month" class="form-inputs date" type="number" name="due-date-month" value="" placeholder="Month"> /
+                <input id="due-date-year" class="form-inputs date" type="number" name="due-date-year" value="" placeholder="Year"></td>
+            </tr>
+            <tr>
+              <td>
+                <label id="desc-label" for="title">Description</label>
+                <textarea id="description-text" name="description" class="form-inputs" rows="8" cols="80" placeholder="Description"></textarea></td>
+            </tr>
+            <tr>
+              <td><button id="save" type="button" name="save">
+              <span>Save
+              </span>
+            </button></td>
+              <td><button id="mark-complete" type="button" name="mark-complete">
+              <span>Mark As Complete</span>
+            </button></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+
+
+      </div>
+
+      <h2 id="todo-title">02/16 </h2>
+      <ul id="todo-list">
+        <li><span id="add-todo">&#65291; Add new to do</span></li>
+        <li class="todo-line"><i class="fa-square-o"> </i> <span class="todo-item">Item 1</span> <i class="fa fa-trash-o" aria-hidden="true"></i></li>
+        <li class="todo-line"> <span class="todo-item">Item 2 </span><i class="fa fa-trash-o" aria-hidden="true"></i></li>
+      </ul>
+    </div>
+
+
+  </div>
+
+
+</body>
+<script type="text/javascript" src="app.js" defer></script>
+
+</html>
