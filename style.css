@@ -48,7 +48,7 @@ h2 {
 }
 
 .date {
-  width: 10%;
+  width: 55px;
   line-height: 30px;
 }
 
@@ -70,6 +70,7 @@ button {
   border-radius: 10px;
   width: 185px;
   height: 37px;
+  border: none;
 }
 
 #container {
@@ -144,6 +145,16 @@ button {
   height: 5%;
   margin: 0px auto;
   color: #ABAEBD
+}
+
+.nav-date-active {
+  background-color: #383E5F;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-date-active>.nav-badge {
+  background-color: #128DD5;
 }
 
 .nav-date:hover {

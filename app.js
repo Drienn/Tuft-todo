@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   const nav = document.getElementById("nav")
 
+  const navDate = document.getElementsByClassName("nav-date")
+  const navDateArray = Array.from(navDate)
+
   const addTodoBtn = document.getElementById("add-todo")
 
   const todoList = document.getElementById("todo-list")
@@ -33,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const todoItems = Array.from(todoText)
 
   let totalCompleted;
+
+  navDateArray.map((date, index) => date.addEventListener("click", (e) => {
+      navDateArray[index].classList.remove("nav-date-active")
+      e.target.classList.add("nav-date-active")
+    })
+  )
 
   if (window.innerWidth <= "500px"){
     console.log("threashold reached - 500px!")
@@ -191,13 +200,14 @@ save()
 
 
   //removes todo Item
-  const removeTodo = () =>
-  trash.map(can => can.addEventListener("click", (e) => {
-    let currentItem = e.target.parentNode
-    todoList.removeChild(currentItem)
-    console.log(currentItem)
-  }))
-  removeTodo()
+  const removeTodo = (target) => target.addEventListener("click", (e) => {
+      let currentItem = e.target.parentNode
+      
+      confirm("Are you sure you want to delete this todo?") ?
+        todoList.removeChild(currentItem):
+        currentItem
+    })
+  trash.map(can => removeTodo(can))
 
   //adds a new todo with appropriate count
   addTodoBtn.addEventListener("click", () => {
@@ -245,7 +255,7 @@ save()
 
     showEditModal()
     checkBoxClick()
-    removeTodo()
+    removeTodo(trashcan)
     console.log('new item', newItem)
   })
 
