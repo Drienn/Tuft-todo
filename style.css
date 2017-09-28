@@ -4,6 +4,10 @@ body {
   font-family: arial;
 }
 
+h2 {
+  display: inline-block;
+}
+
 #modal-container {
   z-index: 1;
   width: 100vw;
@@ -134,7 +138,6 @@ button {
   line-height: auto;
   min-width: 25px;
   width: auto;
-  margin-right: 5px;
 }
 
 .nav-date {

@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // initiating variables for modal functions
   let currentTodo;
   let currentTitle;
+  let currentDescription;
 
   const saveBtn = document.getElementById("save")
 
@@ -31,29 +32,73 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //creates an iterable array from todoLine
   const todoItems = Array.from(todoText)
 
+  let totalCompleted;
+
   if (window.innerWidth <= "500px"){
     console.log("threashold reached - 500px!")
   }
 
-  console.log(todoItems)
+  const checkBoxClick = () =>
 
-  const showEditModal = () => todoItems.map(item => item.addEventListener("click", (e) =>{
+  todoItems.map(item => {
+      let checkBox = item.previousElementSibling
+    if (checkBox.classList.contains("hasClick")){
+       return item;
+    }  else {
+      checkBox.classList.add("hasClick")
+      checkBox.addEventListener("click", () => {
+      item.classList.contains("complete-todo") ?
+      item.classList.remove("complete-todo") :
+      item.classList.add("complete-todo")
+        console.log("hello!")
+
+
+      if (item.classList.contains("complete-todo")){
+        checkBox.classList.remove('fa-square-o')
+        checkBox.classList.add('fa')
+        checkBox.classList.add('fa-check-square-o')
+      } else {
+      checkBox.classList.add('fa-square-o')
+      checkBox.classList.remove('fa')
+      checkBox.classList.remove('fa-check-square-o')
+      }
+        totalCompleted = todoItems.filter(item => item.classList.contains("complete-todo"))
+        // console.log(item);
+        // console.log('list of completed todos = ',totalCompleted);
+      })
+      return item;
+    }
+  })
+
+  checkBoxClick()
+
+  const showEditModal = () => todoItems.map(item =>{
+     item.addEventListener("click", (e) =>{
       modalContainer.style.display = ""
       modalContent.style.display = ""
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
 
-      console.log("event in question - ", e.target)
-
+      // console.log("event in question - ", e.target)
+      description.value = item.nextElementSibling.value
       titleText.value = e.target.innerHTML
-      console.log("Clicked todo and title text - ", titleText)
+
+      if (description.value === "undefined"){
+        description.value = ""
+      }
+      // console.log("Clicked todo and title text - ", titleText)
+
       currentTodo = document.getElementById(e.target.innerHTML)
-      console.log(currentTodo)
+      console.log('current todo - ', currentTodo)
+      console.log('Previous child node - ',currentTodo.previousElementSibling)
+      // currentTodo.previousElementSibling.addEventListener("click", )
 
       currentTodo.classList.contains('complete-todo') ?
         markCompleteBtn.innerHTML = "Not Completed" :
         markCompleteBtn.innerHTML = "Mark As Complete"
+
+
     })
-  )
+  })
 
   showEditModal()
 
@@ -73,20 +118,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     container.style.backgroundColor = "rgba(255, 255, 255, 1)"
 
     currentTodo.id = newTitle.value
+    currentTodo.nextElementSibling.value = description.value
 
-    currentTodo.innerHTML = newTitle.value;
+    currentTodo.innerHTML = newTitle.value
   })
 save()
 
-  const markComplete = () => markCompleteBtn.addEventListener("click", (e) => {
+  const markComplete = (target) => target.addEventListener("click", (e) => {
     modalContainer.style.display = "none"
     modalContent.style.display = "none"
     container.style.backgroundColor = "rgba(255, 255, 255, 1)"
 
-    !currentTodo.classList.contains("complete-todo") ?
-    currentTodo.classList.add("complete-todo") :
-    currentTodo.classList.remove("complete-todo")
+    currentTodo.classList.contains("complete-todo") ?
+    currentTodo.classList.remove("complete-todo") :
+    currentTodo.classList.add("complete-todo")
 
+    console.log('todo classlist - ',currentTodo.classList)
     if (currentTodo.classList.contains("complete-todo")){
     currentTodo.previousElementSibling.classList.remove('fa-square-o')
     currentTodo.previousElementSibling.classList.add('fa')
@@ -100,7 +147,7 @@ save()
 
     console.log("hello from mark complete btn!")
   })
-  markComplete()
+  markComplete(markCompleteBtn)
 
 
   const getTrashCans = document.getElementsByClassName("fa-trash-o")
@@ -160,6 +207,7 @@ save()
     let checkBox = document.createElement('i')
 
 
+
     //creates a new li in the todoList ul
     todoList.appendChild(newLine)
 
@@ -186,20 +234,19 @@ save()
 
     todoItems.push(newItem)
     //adds click event to create edit modal
+
     newItem.addEventListener("click", (e) => {
       modalContainer.style.display = ""
       modalContent.style.display = ""
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
 
-
-      showEditModal()
       titleText.value = e.target.innerHTML
     })
 
-
-    console.log('new item', newItem)
-    //removes todo Item
+    showEditModal()
+    checkBoxClick()
     removeTodo()
+    console.log('new item', newItem)
   })
 
 });
