@@ -25,8 +25,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   const todoText = document.getElementsByClassName("todo-item")
   //creates an iterable array from todoLine
-  const todoItems = Array.from(todoText);
+  const todoItems = Array.from(todoText)
 
+  if (window.innerWidth <= "500px"){
+    console.log("threashold reached - 500px!")
+  }
 
   const showEditTodo = () => todoItems.map(item => item.addEventListener("click", (e) =>{
       modalContainer.style.display = ""
@@ -39,17 +42,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   showEditTodo()
 
-  modalContainer.addEventListener("click", () => {
+  let closeModal = () => modalContainer.addEventListener("click", () => {
     modalContainer.style.display = "none"
     modalContent.style.display = "none"
     container.style.backgroundColor = "rgba(255, 255, 255, 1)"
   })
+  closeModal()
 
-  saveBtn.addEventListener("click", (e) => {
-    let updatedTitle = document.getElementById('title-text')
-
+  const save = () => saveBtn.addEventListener("click", (e) => {
+    let currentTitle = document.getElementById("title-text").value
+    let todoTitle = document.getElementById("title-text")
+    console.log('current title - ',currentTitle)
+    console.log('todo title - ',todoTitle)
+    modalContainer.style.display = "none"
+    modalContent.style.display = "none"
+    container.style.backgroundColor = "rgba(255, 255, 255, 1)"
+    todoTitle.innerHTML = currentTitle
+    todoTitle.id = currentTitle
   })
-
+save()
 
 
   const getTrashCans = document.getElementsByClassName("fa-trash-o")
@@ -106,18 +117,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let newLine = document.createElement('li')
     let newItem = document.createElement('span')
     let trashcan = document.createElement('i')
+    let checkBox = document.createElement('i')
+
 
     //creates a new li in the todoList ul
     todoList.appendChild(newLine)
+
     //adds class to the newly created li
     newLine.classList.add("todo-line")
+    //adds checkbox to li
+    newLine.appendChild(checkBox)
+    checkBox.classList.add("fa-square-o")
     //adds a span to the li
     newLine.appendChild(newItem)
     //adds class to the newly created span
     newItem.classList.add("todo-item")
 
     //adds starter text for span based on todo-list length
-    newItem.innerHTML = `Item ${todoCount() - 1}`
+    newItem.innerHTML = ` Item ${todoCount() - 1}`
+    //adds dynamic id to newItem without the beginning space
+    newItem.id = newItem.innerHTML.slice(1)
+
     //adds a trashcan to the end of the new todo
     newLine.appendChild(trashcan)
     //adds classes to the trashcans to
@@ -138,8 +158,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //removes todo Item
     removeTodo()
   })
-
-
-
 
 });

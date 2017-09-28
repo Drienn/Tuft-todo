@@ -68,8 +68,6 @@ button {
   height: 37px;
 }
 
-button span {}
-
 #container {
   height: 100vh;
   display: grid;
@@ -101,9 +99,11 @@ button span {}
   overflow-x: hidden;
 }
 
-@media (max-width: 500px) {
-  z-index: 1;
-  background-color: green;
+@media screen and (max-width: 500px) {
+  #container {
+    grid-column: 1/ span all;
+    grid-row: 1/ span all;
+  }
 }
 
 .nav-title {
@@ -176,6 +176,11 @@ li {
   padding: 10px;
 }
 
+.fa-square-o {
+  font-size: 20px;
+  color: #B5B5B5;
+}
+
 .todo-item:hover {
   color: #4FA0D5;
   cursor: pointer;
@@ -184,6 +189,7 @@ li {
 .fa-trash-o {
   position: absolute;
   right: 10px;
+  color: #777;
 }
 
 .fa-trash-o:hover {
