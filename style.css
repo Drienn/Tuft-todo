@@ -116,6 +116,11 @@ button {
   text-decoration: line-through;
 }
 
+.complete-todo {
+  text-decoration: line-through;
+  color: #BEBEBE;
+}
+
 #total-badge {
   margin-top: 50px;
 }
@@ -179,6 +184,15 @@ li {
 .fa-square-o {
   font-size: 20px;
   color: #B5B5B5;
+}
+
+.fa-check-square-o {
+  font-size: 20px;
+  color: #B5B5B5;
+}
+
+.todo-item {
+  margin: 15px;
 }
 
 .todo-item:hover {

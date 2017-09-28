@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const year = document.getElementById("due-date-year")
   const description = document.getElementById("description-text")
 
+  // initiating variables for modal functions
+  let currentTodo;
+  let currentTitle;
+
   const saveBtn = document.getElementById("save")
 
   const markCompleteBtn = document.getElementById("mark-complete")
@@ -31,16 +35,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("threashold reached - 500px!")
   }
 
-  const showEditTodo = () => todoItems.map(item => item.addEventListener("click", (e) =>{
+  console.log(todoItems)
+
+  const showEditModal = () => todoItems.map(item => item.addEventListener("click", (e) =>{
       modalContainer.style.display = ""
       modalContent.style.display = ""
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
 
+      console.log("event in question - ", e.target)
+
       titleText.value = e.target.innerHTML
+      console.log("Clicked todo and title text - ", titleText)
+      currentTodo = document.getElementById(e.target.innerHTML)
+      console.log(currentTodo)
+
+      currentTodo.classList.contains('complete-todo') ?
+        markCompleteBtn.innerHTML = "Not Completed" :
+        markCompleteBtn.innerHTML = "Mark As Complete"
     })
   )
 
-  showEditTodo()
+  showEditModal()
 
   let closeModal = () => modalContainer.addEventListener("click", () => {
     modalContainer.style.display = "none"
@@ -50,17 +65,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
   closeModal()
 
   const save = () => saveBtn.addEventListener("click", (e) => {
-    let currentTitle = document.getElementById("title-text").value
-    let todoTitle = document.getElementById("title-text")
-    console.log('current title - ',currentTitle)
-    console.log('todo title - ',todoTitle)
+     let newTitle = document.getElementById("title-text")
+
+    console.log('current title - ',newTitle.value)
     modalContainer.style.display = "none"
     modalContent.style.display = "none"
     container.style.backgroundColor = "rgba(255, 255, 255, 1)"
-    todoTitle.innerHTML = currentTitle
-    todoTitle.id = currentTitle
+
+    currentTodo.id = newTitle.value
+
+    currentTodo.innerHTML = newTitle.value;
   })
 save()
+
+  const markComplete = () => markCompleteBtn.addEventListener("click", (e) => {
+    modalContainer.style.display = "none"
+    modalContent.style.display = "none"
+    container.style.backgroundColor = "rgba(255, 255, 255, 1)"
+
+    !currentTodo.classList.contains("complete-todo") ?
+    currentTodo.classList.add("complete-todo") :
+    currentTodo.classList.remove("complete-todo")
+
+    if (currentTodo.classList.contains("complete-todo")){
+    currentTodo.previousElementSibling.classList.remove('fa-square-o')
+    currentTodo.previousElementSibling.classList.add('fa')
+    currentTodo.previousElementSibling.classList.add('fa-check-square-o')
+  } else {
+    currentTodo.previousElementSibling.classList.add('fa-square-o')
+    currentTodo.previousElementSibling.classList.remove('fa')
+    currentTodo.previousElementSibling.classList.remove('fa-check-square-o')
+  }
+    console.log('previous sib', currentTodo.previousElementSibling)
+
+    console.log("hello from mark complete btn!")
+  })
+  markComplete()
 
 
   const getTrashCans = document.getElementsByClassName("fa-trash-o")
@@ -132,11 +172,10 @@ save()
     newLine.appendChild(newItem)
     //adds class to the newly created span
     newItem.classList.add("todo-item")
-
     //adds starter text for span based on todo-list length
-    newItem.innerHTML = ` Item ${todoCount() - 1}`
+    newItem.innerHTML = `Item ${todoCount() - 1}`
     //adds dynamic id to newItem without the beginning space
-    newItem.id = newItem.innerHTML.slice(1)
+    newItem.id = newItem.innerHTML
 
     //adds a trashcan to the end of the new todo
     newLine.appendChild(trashcan)
@@ -145,16 +184,20 @@ save()
     trashcan.classList.add("fa-trash-o")
     trash.push(trashcan)
 
-    todoItems.push(newLine)
+    todoItems.push(newItem)
     //adds click event to create edit modal
     newItem.addEventListener("click", (e) => {
       modalContainer.style.display = ""
       modalContent.style.display = ""
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
 
+
+      showEditModal()
       titleText.value = e.target.innerHTML
     })
 
+
+    console.log('new item', newItem)
     //removes todo Item
     removeTodo()
   })
