@@ -4,9 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const modalContainer = document.getElementById("modal-container")
   const modalContent = document.getElementById("modal-content")
   const titleText = document.getElementById("title-text")
-  const day = document.getElementById("due-date-day")
-  const month = document.getElementById("due-date-month")
-  const year = document.getElementById("due-date-year")
+
   const description = document.getElementById("description-text")
 
 
@@ -15,6 +13,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let currentTodo;
   let currentTitle;
   let currentDescription;
+  let currentDay = document.getElementById("due-date-day")
+  let currentMonth = document.getElementById("due-date-month")
+  let currentYear = document.getElementById("due-date-year")
 
   const saveBtn = document.getElementById("save")
 
@@ -99,6 +100,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // console.log("event in question - ", e.target)
       description.value = item.nextElementSibling.value
       titleText.value = e.target.innerHTML
+      currentDay.value = item.parentNode.children[3].value
+      currentMonth.value = item.parentNode.children[4].value
+      currentYear.value = item.parentNode.children[5].value
 
       if (description.value === "undefined"){
         description.value = ""
@@ -137,6 +141,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     currentTodo.id = newTitle.value
     currentTodo.nextElementSibling.value = description.value
+    currentTodo.parentNode.children[3].value = currentDay.value
+    currentTodo.parentNode.children[4].value = currentMonth.value
+    currentTodo.parentNode.children[5].value = currentYear.value
 
     currentTodo.innerHTML = newTitle.value
   })
