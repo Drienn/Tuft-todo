@@ -20,6 +20,7 @@
   <div id="container">
     <!-- Nav Bar -->
     <div id="nav" style="width: 0px">
+
       <p class="nav-title"><i class="fa fa-list-ul" aria-hidden="true"></i> All Todos </p>
       <span class="nav-badge" id="total-badge">15</span>
       <div class="nav-date">02/16
@@ -36,10 +37,12 @@
       </div>
 
     </div>
+
+
     <img src="images/menu-icon.svg" alt="menu-toggle" id="menu-toggle">
 
-
     <div id="main-container">
+
       <!-- modal -->
       <!-- style="display: none" -->
       <div id="modal-container" style="display: none">
@@ -68,13 +71,14 @@
                 <textarea id="description-text" name="description" class="form-inputs" rows="8" cols="80" placeholder="Description"></textarea></td>
             </tr>
             <tr>
-              <td><button id="save" type="button" name="save">
-              <span>Save
-              </span>
-            </button></td>
-              <td><button id="mark-complete" type="button" name="mark-complete">
-              <span>Mark As Complete</span>
-            </button></td>
+              <td>
+                <button id="save" type="button" name="save">
+                  <span>Save</span>
+                </button>
+                <button id="mark-complete" type="button" name="mark-complete">
+                  <span>Mark As Complete</span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -84,7 +88,7 @@
 
       </div>
 
-      <span id="todo-title">02/16 </span> <span id="main-badge">8</span>
+      <span id="todo-title">02/16 </span> <span id="main-badge">2</span>
       <ul id="todo-list">
         <li><span id="add-todo">&#65291; Add new to do</span></li>
 

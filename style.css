@@ -10,14 +10,17 @@ h2 {
 
 #modal-container {
   z-index: 1;
+  grid-area: 1/1/span all/ span all;
   width: 100vw;
   height: 100vh;
   position: fixed;
+  margin-top: -300px;
+  padding-bottom: 300px;
 }
 
 #modal-content {
   z-index: 2;
-  width: 35%;
+  width: 550px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -53,7 +56,7 @@ h2 {
 }
 
 #title-text {
-  width: 80%;
+  width: 70%;
   line-height: 30px;
 }
 
@@ -63,8 +66,9 @@ h2 {
 
 button {
   font-size: 18px;
-  float: right;
-  margin-right: 20px;
+  margin: 10px;
+  position: relative;
+  left: 80px;
   background-color: #128DD5;
   color: white;
   border-radius: 10px;
@@ -81,11 +85,11 @@ button {
 }
 
 #menu-toggle {
-  grid-column: 1;
-  grid-row: 1;
+  z-index: 3;
+  grid-area: 1/1/1/1;
+  margin-left: 35px;
   height: 50px;
   width: 50px;
-  margin-left: 15%;
 }
 
 .fa-list-ul {
@@ -97,18 +101,12 @@ button {
   height: 100vh;
   grid-column: 1 / span 2;
   grid-row: 1;
+  width: 335px;
   color: white;
   background-color: #464D77;
   text-align: center;
   font-size: 20px;
   overflow-x: hidden;
-}
-
-@media screen and (max-width: 500px) {
-  #container {
-    grid-column: 1/ span all;
-    grid-row: 1/ span all;
-  }
 }
 
 .nav-title {
@@ -142,7 +140,7 @@ button {
 }
 
 .nav-date {
-  height: 5%;
+  height: 30px;
   margin: 0px auto;
   color: #ABAEBD
 }
@@ -205,6 +203,7 @@ li {
   width: 99%;
   border-top: 1px solid lightgrey;
   padding: 10px;
+  line-height: 30px;
 }
 
 .fa-square-o {
@@ -219,6 +218,7 @@ li {
 
 .todo-item {
   margin: 15px;
+  font-size: 16px;
 }
 
 .todo-item:hover {
@@ -232,6 +232,19 @@ li {
   color: #777;
 }
 
+.fa-trash-o::before {
+  font-size: 20px;
+}
+
 .fa-trash-o:hover {
   cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  #modal-content {
+    width: 350px;
+  }
+  #mark-complete {
+    clear: right;
+  }
 }

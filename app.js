@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const menuBtn = document.getElementById("menu-toggle")
 
   const nav = document.getElementById("nav")
-
+  const mainContainer = document.getElementById("main-container")
   const navDate = document.getElementsByClassName("nav-date")
   const navDateArray = Array.from(navDate)
 
@@ -39,9 +39,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const todoItems = Array.from(todoText)
   const firstBadge = document.getElementById("02/16")
   let mainBadge = document.getElementById("main-badge")
+  let totalBadge = document.getElementById("total-badge")
     //initiates badges
     firstBadge.innerHTML = todoItems.length
     mainBadge.innerHTML = firstBadge.innerHTML
+    totalBadge.innerHTML = +mainBadge.innerHTML + 7
   let totalCompleted = []
   let deletedTodos = []
 
@@ -51,17 +53,65 @@ document.addEventListener("DOMContentLoaded", function(event) {
     })
   )
 
-  if (window.innerWidth <= "500px"){
-    console.log("threashold reached - 500px!")
-  }
 
+  window.onresize = () => {
+    if (window.innerWidth <= 1340) {
+    console.log("1340 screen width!")
+      if(nav.style.width !== "0px")
+        nav.style.width = "335px"
+        nav.style.zIndex = "3"
+        menuBtn.style.gridArea = "1/1/1/1"
+        mainContainer.styel.gridArea = "1/1/span all/ span all"
+      } else {
+        if(nav.style.width === "335px") {
+          nav.style.width = "100%"
+          menuBtn.style.gridArea = "1 / 3 / 1 / auto"
+          mainContainer.style.gridColumn = "3/ span all"
+        }
+        // menuBtn.style.gridArea = "1/3/1/auto"
+        // mainContainer.style.gridArea = "2/1/span all/ span all"
 
+      }
+    }
+
+    const openNav = () => {
+      if (window.innerWidth >= 1340) {
+        nav.style.width = "100%"
+        nav.style.mindWidth = "335px"
+        mainContainer.style.gridColumn = "3/span all"
+        menuBtn.style.gridColumn = "3"
+      }else{
+        console.log("hello!")
+        nav.style.width = "335px"
+        nav.style.zIndex = "3"
+        }
+      }
+
+    const closeNav = () => {
+      if (window.innerWidth >= 1340) {
+        nav.style.width = "0px"
+        mainContainer.style.gridColumn = "1/span all"
+        document.body.style.backgroundColor = "white"
+        menuBtn.style.gridColumn = "1"
+      }else{
+        console.log("hello!")
+        nav.style.width = "0px"
+        mainContainer.style.gridColumn = "1/span all"
+      }
+    }
+
+    //Opens/Closes SideNav
+    menuBtn.addEventListener("click", () => {
+      nav.style.width === "0px" ?
+      openNav() :
+      closeNav()
+    })
 
   const checkBoxClick = () =>
   todoItems.map(item => {
       let checkBox = item.previousElementSibling
     if (checkBox.classList.contains("hasClick")){
-       return item;
+       return item
     }  else {
       checkBox.classList.add("hasClick")
       checkBox.addEventListener("click", () => {
@@ -84,8 +134,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         //updates badges
         firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
         mainBadge.innerHTML = firstBadge.innerHTML
+        totalBadge.innerHTML = +mainBadge.innerHTML + 7
       })
-      return item;
+      return item
     }
   })
 
@@ -96,6 +147,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       modalContainer.style.display = ""
       modalContent.style.display = ""
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
+      mainBadge.style.backgroundColor = "#0F70AA"
+      mainBadge.style.color = "#C7CACB"
+
 
       // console.log("event in question - ", e.target)
       description.value = item.nextElementSibling.value
@@ -124,20 +178,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   showEditModal()
 
-  let closeModal = () => modalContainer.addEventListener("click", () => {
+  let closeModal = (target) => target.addEventListener("click", () => {
     modalContainer.style.display = "none"
     modalContent.style.display = "none"
     container.style.backgroundColor = "rgba(255, 255, 255, 1)"
+    mainBadge.style.backgroundColor = "#128DD5"
+    mainBadge.style.color = "white"
   })
-  closeModal()
+
+  //close modal event added to dom elements
+  closeModal(modalContainer)
+  closeModal(saveBtn)
+  closeModal(markCompleteBtn)
 
   const save = () => saveBtn.addEventListener("click", (e) => {
      let newTitle = document.getElementById("title-text")
 
     console.log('current title - ',newTitle.value)
-    modalContainer.style.display = "none"
-    modalContent.style.display = "none"
-    container.style.backgroundColor = "rgba(255, 255, 255, 1)"
 
     currentTodo.id = newTitle.value
     currentTodo.nextElementSibling.value = description.value
@@ -150,9 +207,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 save()
 
   const markComplete = (target) => target.addEventListener("click", (e) => {
-    modalContainer.style.display = "none"
-    modalContent.style.display = "none"
-    container.style.backgroundColor = "rgba(255, 255, 255, 1)"
 
     currentTodo.classList.contains("complete-todo") ?
     currentTodo.classList.remove("complete-todo") :
@@ -173,6 +227,7 @@ save()
     //updates badges
     firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
     mainBadge.innerHTML = firstBadge.innerHTML
+    totalBadge.innerHTML = +mainBadge.innerHTML + 7
   })
   markComplete(markCompleteBtn)
 
@@ -184,7 +239,7 @@ save()
 
   //gets the current number of todos
   let todoCount = () => {
-    let itemCount = [];
+    let itemCount = []
 
     todoList.childNodes.forEach(li => {
       if (li.nodeName === "LI")
@@ -193,26 +248,7 @@ save()
     return itemCount.length
   }
 
-  const openNav = () => {
-    document.getElementById("nav").style.width = "100%";
-    document.getElementById("main-container").style.gridColumn = "3/span all";
-    document.getElementById("menu-toggle").style.gridColumn = "3";
-    document.getElementsByClassName(".todo-line").style.width = "99%";
-  }
-  const closeNav = () => {
-    document.getElementById("nav").style.width = "0px";
-    document.getElementById("main-container").style.gridColumn = "1/span all";
-    document.body.style.backgroundColor = "white";
-    document.getElementById("menu-toggle").style.gridColumn = "1";
-  }
 
-  //Opens/Closes SideNav
-  menuBtn.addEventListener("click", () => {
-    console.log("clicked!")
-    nav.style.width === "0px" ?
-    openNav() :
-    closeNav()
-  })
 
   //shows modal
 
@@ -221,19 +257,21 @@ save()
   const removeTodo = (target) => target.addEventListener("click", (e) => {
       let currentItem = e.target.parentNode
 
-      confirm("Are you sure you want to delete this todo?") ?
-        todoList.removeChild(currentItem):
-        currentItem
-
-        //updates badges
-        console.log(currentItem.children[1])
-        currentItem.children[1].classList.contains("complete-todo") ?
-        null :
-        deletedTodos.push(currentItem.children[1])
-
-        firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
-        mainBadge.innerHTML = firstBadge.innerHTML
+      if(confirm("Are you sure you want to delete this todo?")) {
+        todoList.removeChild(currentItem)
+          if(currentItem.children[1].classList.contains("complete-todo")){
+            null
+        } else {
+          deletedTodos.push(currentItem.children[1])
+          firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
+          mainBadge.innerHTML = firstBadge.innerHTML
+          totalBadge.innerHTML = +mainBadge.innerHTML + 7
+        }
+      } else {
+        null
+      }
     })
+
   trash.map(can => removeTodo(can))
 
   //adds a new todo with appropriate count
@@ -309,6 +347,7 @@ save()
     //updates badges
     firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
     mainBadge.innerHTML = firstBadge.innerHTML
+    totalBadge.innerHTML = +mainBadge.innerHTML + 7
   })
 
-});
+})
