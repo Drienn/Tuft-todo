@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const year = document.getElementById("due-date-year")
   const description = document.getElementById("description-text")
 
+
+
   // initiating variables for modal functions
   let currentTodo;
   let currentTitle;
@@ -34,11 +36,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const todoText = document.getElementsByClassName("todo-item")
   //creates an iterable array from todoLine
   const todoItems = Array.from(todoText)
-
-  let totalCompleted;
+  const firstBadge = document.getElementById("02/16")
+  let mainBadge = document.getElementById("main-badge")
+    //initiates badges
+    firstBadge.innerHTML = todoItems.length
+    mainBadge.innerHTML = firstBadge.innerHTML
+  let totalCompleted = []
+  let deletedTodos = []
 
   navDateArray.map((date, index) => date.addEventListener("click", (e) => {
-      navDateArray[index].classList.remove("nav-date-active")
+      navDateArray.map(date => date.classList.remove("nav-date-active"))
       e.target.classList.add("nav-date-active")
     })
   )
@@ -47,8 +54,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("threashold reached - 500px!")
   }
 
-  const checkBoxClick = () =>
 
+
+  const checkBoxClick = () =>
   todoItems.map(item => {
       let checkBox = item.previousElementSibling
     if (checkBox.classList.contains("hasClick")){
@@ -61,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       item.classList.add("complete-todo")
         console.log("hello!")
 
-
       if (item.classList.contains("complete-todo")){
         checkBox.classList.remove('fa-square-o')
         checkBox.classList.add('fa')
@@ -72,8 +79,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       checkBox.classList.remove('fa-check-square-o')
       }
         totalCompleted = todoItems.filter(item => item.classList.contains("complete-todo"))
-        // console.log(item);
-        // console.log('list of completed todos = ',totalCompleted);
+
+        //updates badges
+        firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
+        mainBadge.innerHTML = firstBadge.innerHTML
       })
       return item;
     }
@@ -147,14 +156,16 @@ save()
     currentTodo.previousElementSibling.classList.remove('fa-square-o')
     currentTodo.previousElementSibling.classList.add('fa')
     currentTodo.previousElementSibling.classList.add('fa-check-square-o')
+    totalCompleted.push(currentTodo)
   } else {
     currentTodo.previousElementSibling.classList.add('fa-square-o')
     currentTodo.previousElementSibling.classList.remove('fa')
     currentTodo.previousElementSibling.classList.remove('fa-check-square-o')
+    totalCompleted.pop()
   }
-    console.log('previous sib', currentTodo.previousElementSibling)
-
-    console.log("hello from mark complete btn!")
+    //updates badges
+    firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
+    mainBadge.innerHTML = firstBadge.innerHTML
   })
   markComplete(markCompleteBtn)
 
@@ -202,10 +213,19 @@ save()
   //removes todo Item
   const removeTodo = (target) => target.addEventListener("click", (e) => {
       let currentItem = e.target.parentNode
-      
+
       confirm("Are you sure you want to delete this todo?") ?
         todoList.removeChild(currentItem):
         currentItem
+
+        //updates badges
+        console.log(currentItem.children[1])
+        currentItem.children[1].classList.contains("complete-todo") ?
+        null :
+        deletedTodos.push(currentItem.children[1])
+
+        firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
+        mainBadge.innerHTML = firstBadge.innerHTML
     })
   trash.map(can => removeTodo(can))
 
@@ -251,12 +271,17 @@ save()
       container.style.backgroundColor = "rgba(0, 0, 0, .2)"
 
       titleText.value = e.target.innerHTML
+
     })
 
     showEditModal()
     checkBoxClick()
     removeTodo(trashcan)
     console.log('new item', newItem)
+    console.log("todoItems length = ", todoItems.length)
+    //updates badges
+    firstBadge.innerHTML = todoItems.length - totalCompleted.length - deletedTodos.length
+    mainBadge.innerHTML = firstBadge.innerHTML
   })
 
 });
