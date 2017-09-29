@@ -242,7 +242,10 @@ save()
     let newItem = document.createElement('span')
     let trashcan = document.createElement('i')
     let checkBox = document.createElement('i')
-
+    let newDescription = document.createElement('input')
+    let newDay = document.createElement('input')
+    let newMonth = document.createElement('input')
+    let newYear = document.createElement('input')
 
 
     //creates a new li in the todoList ul
@@ -261,6 +264,23 @@ save()
     newItem.innerHTML = `Item ${todoCount() - 1}`
     //adds dynamic id to newItem without the beginning space
     newItem.id = newItem.innerHTML
+
+    newLine.appendChild(newDescription)
+    newDescription.type = "hidden"
+    newDescription.value = ""
+
+    newLine.appendChild(newDay)
+    newDay.type = "hidden"
+    newDay.value = ""
+
+    newLine.appendChild(newMonth)
+    newMonth.type = "hidden"
+    newMonth.value = ""
+
+    newLine.appendChild(newYear)
+    newYear.type = "hidden"
+    newYear.value = "2017"
+
 
     //adds a trashcan to the end of the new todo
     newLine.appendChild(trashcan)
